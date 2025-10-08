@@ -20,6 +20,10 @@ extern "C" {
 
 const struct bt_mesh_comp *model_handler_init(void);
 
+
+//ebs27
+int generate_mesh_message(void);
+
 #ifdef __cplusplus
 }
 #endif

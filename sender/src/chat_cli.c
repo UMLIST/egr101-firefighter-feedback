@@ -318,3 +318,19 @@ int bt_mesh_chat_cli_private_message_send(struct bt_mesh_chat_cli *chat,
 	return bt_mesh_model_send(chat->model, &ctx, &buf, NULL, NULL);
 }
 /* .. include_endpoint_chat_cli_rst_9 */
+
+
+int bt_mesh_dlist_send_message(struct bt_mesh_chat_cli *chat,
+				  const char *msg)
+{
+	struct net_buf_simple *buf = chat->model->pub->msg;
+
+	bt_mesh_model_msg_init(buf, BT_MESH_CHAT_CLI_OP_MESSAGE);
+
+	net_buf_simple_add_mem(buf, msg,
+			       strnlen(msg,
+				       CONFIG_BT_MESH_CHAT_CLI_MESSAGE_LENGTH));
+	net_buf_simple_add_u8(buf, '\0');
+
+	return bt_mesh_model_publish(chat->model);
+}

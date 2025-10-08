@@ -204,6 +204,11 @@ int bt_mesh_chat_cli_message_send(struct bt_mesh_chat_cli *chat,
  * @retval -EINVAL The model is not bound to an application key.
  * @retval -EAGAIN The device has not been provisioned.
  */
+
+ // ebs27
+int bt_mesh_dlist_send_message(struct bt_mesh_chat_cli *chat,
+				  const char *msg);
+
 int bt_mesh_chat_cli_private_message_send(struct bt_mesh_chat_cli *chat,
 					  uint16_t addr,
 					  const uint8_t *msg);

@@ -428,4 +428,27 @@ const struct bt_mesh_comp *model_handler_init(void)
 	shell_print(chat_shell, ">>> Bluetooth Mesh Chat sample <<<");
 
 	return &comp;
+};
+
+// ebs27
+int generate_mesh_message(void)
+{
+	
+	char message[50];
+	char crewID[] = "1a:2b:3c:4d:5e:6f";
+	static uint8_t heartrate = 40;
+
+	/* Heartrate measurements simulation */
+	heartrate++;
+	if (heartrate == 100) {
+		heartrate = 40;
+	}
+
+	sprintf(message, "MSG,%s,%d", crewID, heartrate);
+
+	printk("%s\n", message);
+
+	bt_mesh_dlist_send_message(&chat, message);
+
+	return 0;
 }
