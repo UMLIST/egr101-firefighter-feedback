@@ -318,28 +318,3 @@ int bt_mesh_chat_cli_private_message_send(struct bt_mesh_chat_cli *chat,
 	return bt_mesh_model_send(chat->model, &ctx, &buf, NULL, NULL);
 }
 /* .. include_endpoint_chat_cli_rst_9 */
-
-// ebs27
-int bt_mesh_dlist_private_message_send(struct bt_mesh_chat_cli *chat,
-					  uint16_t addr,
-					  const uint8_t *msg)
-{
-	struct bt_mesh_msg_ctx ctx = {
-		.addr = addr,
-		.app_idx = chat->model->keys[0],
-		.send_ttl = BT_MESH_TTL_DEFAULT,
-		.send_rel = true,
-	};
-	printk("%s\n", msg);
-
-	BT_MESH_MODEL_BUF_DEFINE(buf, BT_MESH_CHAT_CLI_OP_PRIVATE_MESSAGE,
-				 BT_MESH_CHAT_CLI_MSG_MAXLEN_MESSAGE);
-	bt_mesh_model_msg_init(&buf, BT_MESH_CHAT_CLI_OP_PRIVATE_MESSAGE);
-
-	net_buf_simple_add_mem(&buf, msg,
-			       strnlen(msg,
-				       CONFIG_BT_MESH_CHAT_CLI_MESSAGE_LENGTH));
-	net_buf_simple_add_u8(&buf, '\0');
-
-	return bt_mesh_model_send(chat->model, &ctx, &buf, NULL, NULL);
-}
